@@ -7,7 +7,7 @@ public class Produto {
 	private String nome;
 	private double preco;
 	private ArrayList<Pedido> pedidos;
-
+	
 	public Produto(int id, String nome, double preco) {
 		super();
 		this.id = id;

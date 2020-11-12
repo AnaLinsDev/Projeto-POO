@@ -3,6 +3,8 @@ package modelo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+
+
 public class Pedido {
 	private int id;
 	private LocalDateTime datahora;
@@ -19,6 +21,7 @@ public class Pedido {
 		this.entregador = entregador;
 		this.pago = pago;
 		this.cliente = cliente;
+		this.produtos = produtos;
 	}
 
 	public int getId() {
@@ -68,6 +71,25 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	public ArrayList<Produto> getProduto() {
+		return produtos;
+	}
+
+	public void setProduto(ArrayList<Produto> produtos) {
+		this.produtos = produtos;
+	}
+	
+	public void addProduto(Produto p ) {
+		this.getProduto().add(p);
+
+	}
+	public void remProduto(Produto p ) {
+		this.getProduto().remove(p);
+
+	}
+
+
+	
 
 	@Override
 	public String toString() {

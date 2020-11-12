@@ -39,4 +39,12 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 
+	public ArrayList<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(ArrayList<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 }
