@@ -9,60 +9,137 @@ import repositorio.Repositorio;
 
 public class Fachada {
 	private static Repositorio repositorio = new Repositorio();
+	private static int idproduto = 0;
+	private static int idpedido  = 0;
 	
 	  public static ArrayList<Produto> listarProdutos(String text){
 		  return repositorio.getProdutos(text);
 	  }
+
 	  public static ArrayList<Cliente> listarClientes(){
- 		  return repositorio.getCliente();
+ 		  return repositorio.getClientes();
 	  }
 	  public static ArrayList<Pedido> listarPedidos(){
-		  return repositorio.getPedido();
+		  return repositorio.getPedidos();
 	  }
-	
+	  
+	  public static Pedido getPedidoById(int idpedido){
+		  return repositorio.getPedido(idpedido);
+	  }
+	  
 	  public static ArrayList<Pedido> listarPedidos(String tel, int tipo){
 		  return repositorio.getPedido(tel, tipo);
 	  }
 	  
 	  public static Produto cadastrarProduto(String nome, double preco){
-		  return repositorio.makeProduto(nome, preco);
+			idproduto++;
+			Produto produto;
+			produto = new Produto(idproduto, nome, preco);
+			repositorio.adicionar(produto);
+			return produto;
 	  }
 	  
 	  public static Cliente cadastrarCliente(String telefone, String nome, String endereco){
-		  return repositorio.makeCliente(telefone, nome, endereco);
+			Cliente cliente;
+			cliente = new Cliente(telefone, nome, endereco);
+			repositorio.adicionar(cliente);
+			return cliente;
 	  }
 	  
 	  public static Pedido criarPedido(String telefone){
-		  return repositorio.makePedido(telefone);
-	  }
+			idpedido++;
+			Cliente cli = null;
+			boolean isInClientes = false;
+			Pedido pedido;
+			for(Cliente c : repositorio.getClientes()) {
+				if(c.getTelefone() == telefone) {
+					cli = c;
+				}
+			}
+			if (cli != null) {
+				pedido = new Pedido(idpedido,  null,0, null , false, cli );
+				repositorio.adicionar(pedido);
+				return pedido;
+			}
+			return null;
+		}
+	  
 	  
 	  public static void adicionarProdutoPedido(int idpedido, int idproduto){
-		  repositorio.addProdPed( idpedido,  idproduto);
+			for(Pedido pe : repositorio.getPedidos()) {
+				if(pe.getId() == idpedido) {
+					for(Produto pr : repositorio.getProdutos("")) {
+						if(pr.getId() == idproduto) {
+							pe.addProduto(pr);
+						}
+					}
+				}
+			}
 	  }
 	  
 	  public static void removerProdutoPedido(int idpedido, int idproduto){
-		  repositorio.remProdPed( idpedido,  idproduto);
+			for(Pedido pe : repositorio.getPedidos()) {
+				if(pe.getId() == idpedido) {
+					for(Produto pr : repositorio.getProdutos("")) {
+						if(pr.getId() == idproduto) {
+							pe.remProduto(pr);
+						}
+					}
+				}
+			}
 	  }
 	  
 	  public static Pedido consultarPedido(int idpedido){
-		  return repositorio.getPedido( idpedido);
+			Pedido res;
+			res = repositorio.getPedido(idpedido);
+			if (res != null) {
+				return res;
+			}
+			return null;
 	  }
 	  
 	  public static void pagarPedido(int idpedido, String nomeentregador){
-		  repositorio.pagarPed(idpedido, nomeentregador);
+			for(Pedido p : repositorio.getPedidos()) {
+				if(p.getId() == idpedido) {
+					p.setEntregador(nomeentregador);
+					p.setPago(true);
+				}
+			}
 	  }
 	  
 	  public static void cancelarPedido(int idpedido){
-		  repositorio.cancPed(idpedido);
+			for(Pedido p : repositorio.getPedidos()) {
+				if(p.getId() == idpedido) {
+					repositorio.remover(p);
+				}
+			}
 	  }
 	  
 	  public static double consultarArrecadacao(LocalDateTime dia){
-		  return repositorio.consArrecad(dia);
+			double total = 0;
+			for(Pedido p : repositorio.getPedidos()) {
+				if(p.isPago() == true & p.getDatahora() == dia) {
+					total = total + p.getValortotal();
+				}
+			}
+			return total;
 	  }
 
-/*	  
+	  
 	  public static ArrayList<Produto> consultarProdutoTop(){
-		  return repositorio.consProdTop();
+		ArrayList<Produto> topFim = new ArrayList<>();
+		ArrayList<Produto> res = new ArrayList<>();
+		for(Pedido pe :repositorio.getPedidos()) {
+			for(Produto pr : pe.getProduto()) {	
+				topFim.add(pr);
+			}
+		}
+		for (Produto p : topFim) {
+			//TODO
+		}
+		return res;
+		  
 	  }
-*/
 }
+
+

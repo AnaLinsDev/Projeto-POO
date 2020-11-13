@@ -46,5 +46,9 @@ public class Cliente {
 	public void setPedidos(ArrayList<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+	@Override
+	public String toString() {
+		return "Cliente [telefone: " + telefone + ", nome: " + nome + ", endereço: " + endereco +"]";
+	}
 
 }
