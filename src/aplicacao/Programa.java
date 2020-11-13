@@ -27,6 +27,7 @@ public class Programa {
 			Fachada.criarPedido("982845454");
 			Fachada.criarPedido("982867762");
 			Fachada.criarPedido("982989898");
+			Fachada.criarPedido("983434343", 10);
 			
 			// Pagando entregadores para pedido 1 e 2 + cancelando o 3
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import modelo.Produto;
 import modelo.Pedido;
+import modelo.PedidoExpress;
 import modelo.Cliente;
 import repositorio.Repositorio;
 
@@ -49,7 +50,6 @@ public class Fachada {
 	  public static Pedido criarPedido(String telefone){
 			idpedido++;
 			Cliente cli = null;
-			boolean isInClientes = false;
 			Pedido pedido;
 			for(Cliente c : repositorio.getClientes()) {
 				if(c.getTelefone() == telefone) {
@@ -63,6 +63,23 @@ public class Fachada {
 			}
 			return null;
 		}
+	  public static Pedido criarPedido(String telefone, double taxaentrega){
+			idpedido++;
+			Cliente cli = null;
+			Pedido pedido;
+			for(Cliente c : repositorio.getClientes()) {
+				if(c.getTelefone() == telefone) {
+					cli = c;
+				}
+			}
+			if (cli != null) {
+				pedido = new PedidoExpress(idpedido,  null,0, null , false, cli, taxaentrega );
+				repositorio.adicionar(pedido);
+				return pedido;
+			}
+			return null;
+		}
+	  
 	  
 	  
 	  public static void adicionarProdutoPedido(int idpedido, int idproduto){
@@ -111,6 +128,7 @@ public class Fachada {
 			for(Pedido p : repositorio.getPedidos()) {
 				if(p.getId() == idpedido) {
 					repositorio.remover(p);
+					break;
 				}
 			}
 	  }

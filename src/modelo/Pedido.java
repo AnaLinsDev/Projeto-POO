@@ -21,7 +21,7 @@ public class Pedido {
 		this.entregador = entregador;
 		this.pago = pago;
 		this.cliente = cliente;
-		this.produtos = produtos;
+		this.setProdutos(produtos);
 	}
 
 	public int getId() {
@@ -72,11 +72,11 @@ public class Pedido {
 		this.cliente = cliente;
 	}
 	public ArrayList<Produto> getProduto() {
-		return produtos;
+		return getProdutos();
 	}
 
 	public void setProduto(ArrayList<Produto> produtos) {
-		this.produtos = produtos;
+		this.setProdutos(produtos);
 	}
 	
 	public void addProduto(Produto p ) {
@@ -94,7 +94,15 @@ public class Pedido {
 	@Override
 	public String toString() {
 		return "Pedido [id: " + id + ", cliente: " + cliente.getNome() + ", entregador: " +entregador +
-				", datahora: " + datahora + ", valortotal: " + valortotal + ", pago: " + pago + ", produtos: " + produtos + "]";
+				", datahora: " + datahora + ", valortotal: " + valortotal + ", pago: " + pago + ", produtos: " + getProdutos() + "]";
+	}
+
+	public ArrayList<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(ArrayList<Produto> produtos) {
+		this.produtos = produtos;
 	}
 	
 	
