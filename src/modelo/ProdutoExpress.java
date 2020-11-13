@@ -1,10 +1,11 @@
 package modelo;
 
-public class ProdutoExpress extends Produto{
+public class PedidoExpress extends Pedido{
 	private double taxaentrega;
 
-	public ProdutoExpress(int id, String nome, double preco, double taxaentrega) {
-		super(id, nome, preco);
+	public PedidoExpress(int id, LocalDateTime datahora, double valortotal, String entregador, boolean pago,
+			Cliente cliente, double taxaentrega) {
+		super(id, datahora, valortotal, entregador, pago, cliente);
 		this.taxaentrega = taxaentrega;
 	}
 
