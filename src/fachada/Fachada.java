@@ -34,8 +34,9 @@ public class Fachada {
 	  
 	  public static Produto cadastrarProduto(String nome, double preco){
 			idproduto++;
+			ArrayList<Pedido> ped = new ArrayList<>();;
 			Produto produto;
-			produto = new Produto(idproduto, nome, preco);
+			produto = new Produto(idproduto, nome, preco, ped);
 			repositorio.adicionar(produto);
 			return produto;
 	  }
@@ -50,6 +51,7 @@ public class Fachada {
 	  public static Pedido criarPedido(String telefone){
 			idpedido++;
 			Cliente cli = null;
+			ArrayList<Produto> prod = new ArrayList<>();
 			Pedido pedido;
 			for(Cliente c : repositorio.getClientes()) {
 				if(c.getTelefone() == telefone) {
@@ -57,7 +59,7 @@ public class Fachada {
 				}
 			}
 			if (cli != null) {
-				pedido = new Pedido(idpedido,  null,0, null , false, cli );
+				pedido = new Pedido(idpedido,  null,0, null , false, cli, prod );
 				repositorio.adicionar(pedido);
 				return pedido;
 			}
@@ -66,6 +68,7 @@ public class Fachada {
 	  public static Pedido criarPedido(String telefone, double taxaentrega){
 			idpedido++;
 			Cliente cli = null;
+			ArrayList<Produto> prod = new ArrayList<>();
 			Pedido pedido;
 			for(Cliente c : repositorio.getClientes()) {
 				if(c.getTelefone() == telefone) {
@@ -73,7 +76,7 @@ public class Fachada {
 				}
 			}
 			if (cli != null) {
-				pedido = new PedidoExpress(idpedido,  null,0, null , false, cli, taxaentrega );
+				pedido = new PedidoExpress(idpedido,  null,0, null , false, cli,prod, taxaentrega );
 				repositorio.adicionar(pedido);
 				return pedido;
 			}
@@ -88,6 +91,8 @@ public class Fachada {
 					for(Produto pr : repositorio.getProdutos("")) {
 						if(pr.getId() == idproduto) {
 							pe.addProduto(pr);
+							//pr.addPedido(pe);
+							
 						}
 					}
 				}
@@ -100,6 +105,7 @@ public class Fachada {
 					for(Produto pr : repositorio.getProdutos("")) {
 						if(pr.getId() == idproduto) {
 							pe.remProduto(pr);
+							//pr.remPedido(pe);
 						}
 					}
 				}
@@ -148,7 +154,7 @@ public class Fachada {
 		ArrayList<Produto> topFim = new ArrayList<>();
 		ArrayList<Produto> res = new ArrayList<>();
 		for(Pedido pe :repositorio.getPedidos()) {
-			for(Produto pr : pe.getProduto()) {	
+			for(Produto pr : pe.getProdutos()) {	
 				topFim.add(pr);
 			}
 		}

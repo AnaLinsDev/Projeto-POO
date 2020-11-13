@@ -1,13 +1,14 @@
 package modelo;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 public class PedidoExpress extends Pedido{
 	private double taxaEntrega;
 
 	public PedidoExpress(int id, LocalDateTime datahora, double valortotal, String entregador, boolean pago,
-			Cliente cliente, double taxaentrega) {
-		super(id, datahora, valortotal, entregador, pago, cliente);
+			Cliente cliente, ArrayList<Produto> produtos, double taxaentrega) {
+		super(id, datahora, valortotal, entregador, pago, cliente, produtos);
 		this.taxaEntrega = taxaentrega;
 	}
 
